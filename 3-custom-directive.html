@@ -6,7 +6,6 @@
 </head>
 <body>
 
-<!--使用自定义指令, 有四种方式:-->
 <!--1.属性: 在任意元素中添加属性-->
 <div hello-world></div>
 <!--2.元素: 元素以指令名命名-->
@@ -23,20 +22,6 @@
 
 <script type="text/javascript" src="angular.min.js"></script>
 <script>
-    //自定义指令:
-    //1.指定指令适用的范围
-    //2.指令的功能
-
-    //自定义指令的方式
-    //1.通过template来定义模板内容
-    //2.创建文件, 通过templateUrl指定该个文件
-    //3.在缓存中创建文件, 通过templateUrl指定该个文件
-    //4.在script标签内创建文件, 通过templateUrl指定该个文件
-
-    //全局变量
-    //原生JavaScript的全局变量: window
-    //angular.js中的全局变量: angular
-
     //获取angularjs适用的范围(即: 获取当前ng-app这个模块)
     //参数1: 当前ng-app的名字(模块名)
     //参数2: 数组类型, 内部写当前模块所依赖的其他模块名

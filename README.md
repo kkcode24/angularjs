@@ -167,8 +167,93 @@ ng-hide: 是否隐藏该元素, 值为Boolean型
 ```
 
 ## 自定义指令（见3-custom-directive.html）
-###
+> 使用自定义指令, 有四种方式
+1. 通过template来定义模板内容
+2. 创建文件, 通过templateUrl指定该个文件
+3. 在缓存中创建文件, 通过templateUrl指定该个文件
+4. 在script标签内创建文件, 通过templateUrl指定该个文件
 
+**自定义指令:**
+1. 指定指令适用的范围
+2. 指令的功能
+3. 指令的命名: 驼峰法,如```helloWorld```
+4. 指令的使用格式: 用连接符号"-",如```hello-world```
+5. 指令的创建 module.directive(指令名, 指令功能函数)
+<hr>
+**使用自定义指令有四种方式**
+1. 属性: 在任意元素中添加属性
+```<div hello-world></div>```
+2. 元素: 元素以指令名命名
+```<hello-world></hello-world>```
+3. 类: 类名以指令名命名
+```<div class="hello-world"></div>```
+4. 注释: directive:指令名
+注: 注释要配合replace: true使用
+```<!--directive:hello-world -->```
+
+### 通过template来定义模板内容的核心代码
+```
+//获取angularjs适用的范围(即: 获取当前ng-app这个模块)
+//参数1: 当前ng-app的名字(模块名)
+//参数2: 数组类型, 内部写当前模块所依赖的其他模块名
+var module = angular.module("myApp", []);
+
+//创建自定义指令
+//module.directive(指令名, 指令功能函数)
+module.directive("helloWorld", function () {
+    //返回一个对象(对象内部的key是固定的)
+    return {
+        //限制(对指令使用方式的限制)
+        //E: element, 元素
+        //A: attribute, 属性
+        //C: class, 类
+        //M: mark, 注释
+        restrict: "ECMA",
+        //replace:false, 在元素的内部, 放模板内容
+        //replace:true, 用模板中的元素替换
+        replace: true,
+        //模板内容
+        template: "<h1>你好, 自定义指令!</h1>"
+    }
+});
+```
+### 创建文件, 通过templateUrl指定该个文件
+```
+//当模板的内容过多时, 会使用下面的方式来定义指令
+module.directive('sayHi', function () {
+    return {
+        //templateUrl: 通过指定模板文件的路径, 来加载内容
+        templateUrl: '3-template.html'
+    }
+});
+```
+
+### 把模板存放在缓存中，提高模板的加载速度
+```
+//$templateCache: angularjs内置的一种服务, 用于缓存模板内容
+module.run(function ($templateCache) {
+    //在缓存中创建模板
+    $templateCache.put("test.html", '<h1>做游戏</h1>');
+});
+
+module.directive('play', function () {
+    return {
+        templateUrl: 'test.html'
+    }
+});
+```
+
+### 在script标签内创建文件, 通过templateUrl指定该个文件
+```
+module.directive('byeBye', function () {
+    return {
+        templateUrl: 'aaa.html'
+    }
+});
+<script type="text/ng-template" id="aaa.html">
+    <h1>周六不下雨!</h1>
+</script>
+```
 
 
 
