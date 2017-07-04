@@ -1,0 +1,116 @@
+<!--
+angular.js中的服务: 是一个函数或者一个对象, 一般名字之前会加"$"
+-->
+
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div ng-controller="myCtrl">
+    名字: {{name}} <br>
+    当前网址:{{url}}
+</div>
+
+<div ng-controller="myCtrl1">
+    {{welcome}}
+</div>
+
+<button id="btn">点击发起jsonp请求</button>
+
+<div ng-controller="myCtrl2">
+    <p>2秒后显示一个真理</p>
+    <h1>{{message}}</h1>
+</div>
+
+<div ng-controller="myCtrl3">
+    <h1>当前的时间:{{time}}</h1>
+</div>
+
+<script type="text/javascript" src="angular.min.js"></script>
+<script>
+    var app = angular.module("myApp", []);
+
+    app.controller("myCtrl", function ($scope, $location) {
+        $scope.name = "好好学习";
+        //获取当前的网址路径
+        $scope.url = $location.absUrl();
+    });
+
+    //$http: 网络请求的服务
+    app.controller("myCtrl1", function ($scope, $http) {
+        $scope.welcome = "欢迎欢迎!";
+        //发起get请求
+        $http.get("6-welcome.html").success(function (response) {
+            console.log(response);
+            $scope.welcome = response;
+        });
+
+        //js同源策略, 无法请求
+        $http.get("http://127.0.0.1:1234/test", function (response) {
+            console.log(response);
+        });
+
+        //支持jsonp的请求
+        //angular.js执行jsonp的请求时, 传递的回调函数名为JSON_CALLBACK, 当请求成功后, 自动调用angular定义好的success方法(then方法)
+        $http.jsonp("http://127.0.0.1:1234/test?callback=JSON_CALLBACK").then(function (response) {
+           console.log(response.data);
+        });
+
+    });
+
+</script>
+
+
+<script>
+    function abc(data) {
+        console.log(data);
+    }
+
+    //实现jsonp请求
+    var btn = document.getElementById("btn");
+    btn.onclick = function () {
+        //1.创建script
+        var script = document.createElement("script");
+        //2.指定script的src
+        script.src = "http://127.0.0.1:1234/test?callback=abc";
+        //3.添加script到html文档中
+        document.body.appendChild(script);
+        //4.删除script
+        document.body.removeChild(script);
+    };
+</script>
+
+<script>
+    app.controller("myCtrl2", function ($scope, $timeout) {
+        $scope.message = "辉哥帅吗?";
+        //$timeout: 延迟执行
+        $timeout(function () {
+            $scope.message = "还用问吗!";
+            $timeout(function () {
+                $scope.message = "帅!";
+                $timeout(function () {
+                    $scope.message = "帅帅!";
+                    $timeout(function () {
+                        $scope.message = "帅帅帅!";
+                    }, 1000);
+                }, 1000);
+            }, 1000);
+        }, 1000);
+    });
+</script>
+
+<script>
+    app.controller("myCtrl3", function ($scope, $interval) {
+        $interval(function () {
+            var aDate = new Date();
+            $scope.time = aDate.toLocaleTimeString();
+        }, 1000);
+    });
+</script>
+
+</body>
+</html>

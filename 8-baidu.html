@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div ng-controller="baidu">
+    <input type="text" ng-model="wd" ng-change="change()" list="mylist">
+    <!--<ul>-->
+        <!--<li ng-repeat="text in array">{{text}}</li>-->
+    <!--</ul>-->
+    <datalist id="mylist">
+        <option ng-repeat="text in array" value="{{text}}"></option>
+    </datalist>
+</div>
+
+<script src="angular.min.js"></script>
+<script>
+    var app = angular.module("myApp", []);
+
+    app.controller("baidu", function ($http, $scope) {
+        //input的事件方法
+        $scope.change = function () {
+            //修改url
+            var url  = "https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=" + $scope.wd + "&cb=JSON_CALLBACK";
+            //发起jsonp请求
+            $http.jsonp(url).then(function (response) {
+                //接收关键词的查询结果
+                $scope.array = response.data.s;
+            });
+        }
+
+    });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>路由</title>
+</head>
+<body>
+
+<!--把文件的内容导入进来-->
+<!--
+指令内部, 加单引号, 认为是字符串, 如果不加, 认为是变量
+-->
+<div ng-include="'6-navigation.html'"></div>
+
+<!--路由文件显示的位置-->
+<!--注: 只能出现一次-->
+<ng-view></ng-view>
+
+<script type="text/javascript" src="angular.min.js"></script>
+<script type="text/javascript" src="angular-route.min.js"></script>
+<script>
+    //把路由模块(系统模块, 存放在angular-route.min.js, 模块名字为ngRoute), 导入到当前模块中
+    var app = angular.module("myApp", ["ngRoute"]);
+    //设置路由的规则
+    app.config(function ($routeProvider) {
+        /*
+        //#出现在url中, 代表页面内的跳转, 不会引起浏览器重新加载
+        //angular.js适合写单页面的web应用
+        //判断当前网址#后面的内容
+        $routeProvider.when("/welcome", {
+            templateUrl: "6-welcome.html"
+        });
+        $routeProvider.when("/register", {
+            templateUrl: "6-register.html"
+        });
+        $routeProvider.when("/login", {
+            templateUrl: "6-login.html"
+        });
+        //otherwise: 以上的规则全都不满足, 才触发
+        $routeProvider.otherwise({
+            //redirectTo: 重定向路径
+            redirectTo: "/welcome"
+        });
+        */
+        //angular.js的链式操作
+        $routeProvider.when("/welcome", {
+            templateUrl: "6-welcome.html"
+        }).when("/register", {
+            templateUrl: "6-register.html"
+        }).when("/login", {
+            templateUrl: "6-login.html"
+        }).when("/list", {
+            templateUrl: "6-list.html"
+        }).when("/detail/:id", {
+            templateUrl: "6-detail.html"
+        }).otherwise({
+            redirectTo: "/welcome"
+        });
+    });
+
+    app.controller("detailCtrl", function ($scope, $routeParams) {
+        //$routeParams: 获取路径中的变量, 比如/detail/:id中的id
+        $scope.id = $routeParams.id;
+    });
+
+</script>
+</body>
+</html>

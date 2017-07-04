@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        div::before {
+            content: open-quote;
+        }
+        div::after {
+            content: close-quote;
+        }
+
+        #apple {
+            display: none;
+        }
+        #apple+label::after {
+            content: "";
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 3px solid #000;
+            border-radius: 50%;
+            cursor: pointer;
+            opacity: 0.3;
+        }
+        #apple+label:hover::after {
+            opacity: 0.6;
+        }
+        #apple:checked+label::after {
+            background-color: red;
+            opacity: 1;
+            /*content: "🍎";*/
+            /*font-size: 12px;*/
+            /*text-align: center;*/
+            /*line-height: 16px;*/
+        }
+    </style>
+</head>
+<body>
+    <div>好好学习, 天天向上!</div>
+
+    <input id="apple" type="checkbox">
+    <label for="apple"></label>
+</body>
+</html>
