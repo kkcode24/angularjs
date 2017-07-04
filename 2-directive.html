@@ -1,14 +1,3 @@
-<!--
-指令: 用于扩展HTML
-
-指令的分类:
-1.系统指令
-2.自定义指令
-
-指令定义: 使用驼峰法命名, 系统的指令以ng开头, 比如: ngApp
-指令使用: 单词之间用"-"连接, 比如: ng-app
-
--->
 <!DOCTYPE html>
 <!--
 ng-app: 标记angularjs作用的范围, 例如: 在html元素中标记np-app, 代表html的整个区域都受angularjs的影响
@@ -114,13 +103,13 @@ name和input.value是双向数据绑定
 ng-show: 是否显示该元素, display: none
 -->
 <div ng-show="true">
-    辉哥真帅!
+     kkcode(krik)真帅!
 </div>
 <!--
 ng-hide: 是否隐藏该元素, display
 -->
 <div ng-hide="true">
-    辉哥真的好帅!
+    kkcode(krik)好帅!
 </div>
 <span style="color:red;">...........................</span>
 <!--
@@ -129,7 +118,7 @@ ng-click: 为元素关联事件
 <div ng-init="result = true">
     <button ng-click="result = !result">显示/隐藏</button>
     <div>{{result}}</div>
-    <div ng-show="result">辉哥真帅!</div>
+    <div ng-show="result">kkcode(krik)真帅!</div>
 </div>
 <span style="color:red;">...........................</span>
 
@@ -138,6 +127,7 @@ ng-click: 为元素关联事件
     <div ng-show="isRed" style="width: 100px; height: 100px; background-color: red"></div>
     <div ng-hide="isRed" style="width: 100px; height: 100px; background-color: blue"></div>
 </div>
+<span style="color:red;">...........................</span>
 
 <div ng-init="isBlue = true; obj = {true: 'blue', false: 'red'}">
     <button ng-click="isBlue = !isBlue">切换红色/蓝色</button>
