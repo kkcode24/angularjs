@@ -6,3 +6,6 @@
  + 2.x: 最新版
  + 1.5.x: 稳定版
  + 1.2.x: 兼容IE8的版本
+
+# git clone
+> ```git clone https://github.com/kkcode24/angularjs.git```
