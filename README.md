@@ -5,7 +5,7 @@
 **版本选择:**
  + 4.x: 最新发布（待看）
  + 2.x: 稳定版
- + 1.5.x: 稳定版
+ + 1.5.x: **版
  + 1.2.x: 兼容IE8的版本
 
 # git clone
@@ -254,6 +254,103 @@ module.directive('byeBye', function () {
     <h1>周六不下雨!</h1>
 </script>
 ```
+
+# 控制器（见4-contoller.html）
+> angular的设计模式: MVC
+M: Model, 数据模型, 视图显示的数据
+V: View, 视图, 页面的展示
+C: Controller, 控制器, 连接数据模型和视图
+
+## 控制器的使用
+
+* 在没有控制器之前，我们的实现方式如下：
+```
+<div>
+    <input type="text" ng-model="name" ng-init="name = 'world'">
+    <h1>Hello {{name}}!</h1>
+</div>
+```
+* 有了控制器之后，我们的实现方式如下：
+
+```
+<div ng-controller="myCtrl">
+    <input type="text" ng-model="name1">
+</div>
+
+<script>
+    //获取当前的模块(即ng-app)
+    var app = angular.module("myApp", []);
+    //获取当前模块中的某个控制器
+    app.controller("myCtrl", function ($scope) {
+        //MVC中要求: 视图和数据模型之间的操作, 在controller中完成
+        $scope.name1 = "呵呵";
+    });
+</script>
+```
+
+## $scope简介
+> $scope: 是视图(HTML)和控制器(JavaScript)连接的桥梁
+1. $scope是一个对象
+2. $scope作用域: 在Controller内部
+3. 在Controller内部, 定义的变量是$scope的属性; 定义的方法是$scope的方法
+
+## 向$scope对象上添加属性
+
+```
+<div ng-controller="myCtrl1">
+    姓: <input type="text" ng-model="firstname"><br>
+    名: <input type="text" ng-model="lastname">
+    <div>{{fullname()}}</div>
+</div>
+
+<script>
+    app.controller("myCtrl1", function ($scope) {
+        $scope.firstname = "张";
+        $scope.lastname = "三";
+        $scope.fullname = function () {
+            return $scope.firstname + $scope.lastname;
+        }
+    });
+</script>
+```
+
+## $rootScope:连接多个控制器的桥梁
+
+```
+<div ng-controller="myCtrl2">
+    喜欢吃的水果:
+    <ul>
+        <li ng-repeat="fruit in fruits">{{fruit}}</li>
+    </ul>
+</div>
+
+<div ng-controller="myCtrl3">
+    喜欢吃的水果:
+    <ul>
+        <li ng-repeat="fruit in fruits">{{fruit}}</li>
+    </ul>
+</div>
+
+<script>
+    //没有$rootScope的实现方式
+    //$scope: 连接视图(html)和控制器(javascript)的桥梁
+    app.controller("myCtrl2", function ($scope) {
+        $scope.fruits = ["苹果", "石榴", "芒果"];
+    });
+    app.controller("myCtrl3", function ($scope) {
+        $scope.fruits = ["香蕉", "橘子", "榴莲"];
+    });
+
+    //有$rootScope的实现方式
+    app.controller("myCtrl2", function ($scope, $rootScope) {
+        $rootScope.fruits = ["苹果", "石榴", "芒果"];
+    });
+    app.controller("myCtrl3", function ($scope, $rootScope) {
+        $scope.fruits = $rootScope.fruits;
+    });
+</script>
+```
+# 过滤器（见5-filter.html）
 
 
 

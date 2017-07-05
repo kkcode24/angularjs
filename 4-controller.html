@@ -3,24 +3,18 @@
 M: Model, 数据模型, 视图显示的数据
 V: View, 视图, 页面的展示
 C: Controller, 控制器, 连接数据模型和视图
-
 -->
 <!DOCTYPE html>
 <html lang="en" ng-app="myApp">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Controller</title>
 </head>
 <body>
 
 <div>
     <input type="text" ng-model="name" ng-init="name = 'world'">
     <h1>Hello {{name}}!</h1>
-</div>
-
-<div>
-    <input type="text" ng-model="name" ng-init="name = '世界'">
-    <h1>你好 {{name}}!</h1>
 </div>
 
 
@@ -76,17 +70,16 @@ C: Controller, 控制器, 连接数据模型和视图
 </div>
 
 <script>
-    //$scope: 在当前控制器内生效
-    /*
-    app.controller("myCtrl2", function ($scope) {
+    //没有$rootScope的实现方式
+    //$scope: 连接视图(html)和控制器(javascript)的桥梁
+    /*app.controller("myCtrl2", function ($scope) {
         $scope.fruits = ["苹果", "石榴", "芒果"];
     });
     app.controller("myCtrl3", function ($scope) {
         $scope.fruits = ["香蕉", "橘子", "榴莲"];
-    });
-    */
-    //$scope: 连接视图(html)和控制器(javascript)的桥梁
-    //$rootScope: 连接多个控制器的桥梁
+    });*/
+
+    //有$rootScope的实现方式
     app.controller("myCtrl2", function ($scope, $rootScope) {
         $rootScope.fruits = ["苹果", "石榴", "芒果"];
     });
