@@ -180,16 +180,23 @@ ng-hide: 是否隐藏该元素, 值为Boolean型
 4. 指令的使用格式: 用连接符号"-",如```hello-world```
 5. 指令的创建 module.directive(指令名, 指令功能函数)
 <hr>
-**使用自定义指令有四种方式**
+**使用自定义指令有四种方式**<br>
 1. 属性: 在任意元素中添加属性
-```<div hello-world></div>```
-2. 元素: 元素以指令名命名
-```<hello-world></hello-world>```
+```
+<div hello-world></div>
+```
+2. 元素: 元素以指令名命
+```
+<hello-world></hello-world>
+```
 3. 类: 类名以指令名命名
-```<div class="hello-world"></div>```
-4. 注释: directive:指令名
-注: 注释要配合replace: true使用
-```<!--directive:hello-world -->```
+```
+<div class="hello-world"></div>
+```
+4. 注释: directive:指令名，注: 注释要配合replace: true使用。
+```
+<!--directive:hello-world -->
+```
 
 ### 通过template来定义模板内容的核心代码
 ```
@@ -351,6 +358,142 @@ C: Controller, 控制器, 连接数据模型和视图
 </script>
 ```
 # 过滤器（见5-filter.html）
+> 对数据进行筛选或格式化
+
+可以直接参照官网过滤器介绍：
+[点击直达](https://code.angularjs.org/1.5.8/docs/guide/filter)
+## 使用
+* 首先在myCtrl控制器的作用域内定义一系列的变量
+```
+var app = angular.module("myApp", []);
+app.controller("myCtrl", function ($scope) {
+    $scope.number = 123456789.666;
+    $scope.str = "Hello World!";
+    //IOS: 苹果手机操作系统
+    //OSI: 开放式网络互连, 网络的七层架构
+    //ISO: 国际化标准组织
+    $scope.time = "2016-05-12T10:37:30.666Z";
+    //毫秒时间戳
+    $scope.time1 = 1476265973678;
+    $scope.num = 12345;
+    $scope.students = [
+        {name: 'zhangsan', age: 20},
+        {name: 'lisi', age: 10},
+        {name: 'wangwu', age: 40}
+    ];
+    $scope.myAge = 50;
+});
+```
+* 然后测试各种过滤器格式
+```
+<!--currency: 货币格式-->
+<p>{{number | currency}}</p>
+<!--修改货币符号-->
+<p>{{number | currency:'￥'}}</p>
+<!--小数点后保留几位-->
+<p>{{number | currency:'￥':10}}</p>
+<!--lowercase: 小写-->
+<p>{{str | lowercase}}</p>
+<!--uppercase: 大写-->
+<p>{{str | uppercase}}</p>
+<!--date: 时间格式-->
+<p>{{time | date}}</p>
+<p>{{time | date:"yyyy年MM月dd日 HH:mm:ss a"}}</p>
+<p>{{time1 | date}}</p>
+<p>{{time1 | date:"yyyy年MM月dd日 HH:mm:ss a":"UTC+8"}}</p>
+<!--number: 转数字, 并格式化-->
+<p>{{num | number}}</p>
+<p>{{"34567" | number}}</p>
+<p>{{"34567" | number:2}}</p>
+<ul>
+    <!--升序-->
+    <li ng-repeat="student in students | orderBy:'age'">
+        {{student.name}}----{{student.age}}
+    </li>
+    <hr>
+    <!--降序-->
+    <li ng-repeat="student in students | orderBy:'age':true">
+        {{student.name}}----{{student.age}}
+    </li>
+    <hr>
+    <!--取前几条数据-->
+    <li ng-repeat="student in students | limitTo:2">
+        {{student.name}}----{{student.age}}
+    </li>
+    <hr>
+    <!--是否包含某个内容-->
+    <input type="text" ng-model="key">
+    <li ng-repeat="student in students | filter:key">
+        {{student.name}}----{{student.age}}
+    </li>
+    <hr>
+    <!--条件查找-->
+    <li ng-repeat="student in students | filter:{age : 20}">
+        {{student.name}}----{{student.age}}
+    </li>
+</ul>
+//自己猜测输出结果，然后运行（5-filter.html）去验证
+```
+## 自定义过滤器
+> 过滤器需要单独写模块，不能在当前的模块中添加。
+
+```
+var module = angular.module("filters", []);
+//创建过滤器
+//module.filter(过滤器的名字, 过滤器的功能)
+module.filter('age', function () {
+    //返回一个函数
+    return function (data, value) {
+        //判断是否传递参数value
+        if (angular.isUndefined(value)) {
+            return data - 3;
+        }
+        //data: 过滤的数据
+        return data - value;
+    }
+});
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

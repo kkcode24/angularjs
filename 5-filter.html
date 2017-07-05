@@ -59,9 +59,11 @@
         <h1>年龄: {{myAge | age}}</h1>
         <h1>年龄: {{myAge | age:20}}</h1>
     </ul>
+    
 
     <script type="text/javascript" src="angular.min.js"></script>
     <script>
+    
         //过滤器需要单独写模块, 不能在当前的模块中添加
         var module = angular.module("filters", []);
         //创建过滤器
@@ -77,8 +79,9 @@
                 return data - value;
             }
         });
+     
         //注: 因为当前的模块和过滤器的模块不是同一个模块, 需要将过滤器的模块导入到当前模块中(依赖注入)
-        var app = angular.module("myApp", ["filters"]);
+        var app = angular.module("myApp", []);
         app.controller("myCtrl", function ($scope) {
             $scope.number = 123456789.666;
             $scope.str = "Hello World!";
