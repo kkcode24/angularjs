@@ -81,7 +81,7 @@
         });
      
         //注: 因为当前的模块和过滤器的模块不是同一个模块, 需要将过滤器的模块导入到当前模块中(依赖注入)
-        var app = angular.module("myApp", []);
+        var app = angular.module("myApp", ['filters']);
         app.controller("myCtrl", function ($scope) {
             $scope.number = 123456789.666;
             $scope.str = "Hello World!";

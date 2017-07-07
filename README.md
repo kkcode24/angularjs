@@ -452,8 +452,55 @@ module.filter('age', function () {
         return data - value;
     }
 });
+//注: 因为当前的模块和过滤器的模块不是同一个模块, 
+需要将过滤器的模块导入到当前模块中(依赖注入)
+var app = angular.module("myApp", ['filters']);
+app.controller("myCtrl", function ($scope) {
+    $scope.myAge = 50;
+});
 
 ```
+# 路由
+> 路由模块属于系统模块
+## 说说ng-include指令
+>用来引入其他页面内容。指令内部, 加单引号, 认为是字符串, 如果不加, 认为是变量。
+```<div ng-include="'6-navigation.html'"></div>```
+
+** 设置路由步骤 **
+* 把路由模块注入到当前模块中(路由的作用域)，存放在angular-route.min.js, 模块名字为```ngRoute```
+* 设置路由的规则
+```
+var app = angular.module("myApp", ["ngRoute"]);
+app.config(function ($routeProvider) {
+	//angular.js的链式操作
+	$routeProvider.when("/welcome", {
+	    templateUrl: "6-welcome.html"
+	}).when("/register", {
+	    templateUrl: "6-register.html"
+	}).when("/login", {
+	    templateUrl: "6-login.html"
+	}).when("/list", {
+	    templateUrl: "6-list.html"
+	}).when("/detail/:id", {
+	    templateUrl: "6-detail.html"
+	}).otherwise({
+	    redirectTo: "/welcome"
+	});
+});
+```
+* 路由文件显示的位置
+> <ng-view></ng-view> //只能出现一次
+
+* $routeParams可以操作6-detail.html页面的数据展示
+```
+app.controller("detailCtrl", function ($scope, $routeParams) {
+    //$routeParams: 获取路径中的变量, 比如/detail/:id中的id
+    $scope.id = $routeParams.id;
+});
+```
+
+
+
 
 
 

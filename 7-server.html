@@ -50,9 +50,9 @@ angular.js中的服务: 是一个函数或者一个对象, 一般名字之前会
         });
 
         //js同源策略, 无法请求
-        $http.get("http://127.0.0.1:1234/test", function (response) {
-            console.log(response);
-        });
+//      $http.get("http://127.0.0.1:1234/test", function (response) {
+//          console.log(response);
+//      });
 
         //支持jsonp的请求
         //angular.js执行jsonp的请求时, 传递的回调函数名为JSON_CALLBACK, 当请求成功后, 自动调用angular定义好的success方法(then方法)

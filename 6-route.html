@@ -19,7 +19,7 @@
 <script type="text/javascript" src="angular.min.js"></script>
 <script type="text/javascript" src="angular-route.min.js"></script>
 <script>
-    //把路由模块(系统模块, 存放在angular-route.min.js, 模块名字为ngRoute), 导入到当前模块中
+    //把路由模块(系统模块, 存放在angular-route.min.js, 模块名字为ngRoute), 注入到当前模块中
     var app = angular.module("myApp", ["ngRoute"]);
     //设置路由的规则
     app.config(function ($routeProvider) {
